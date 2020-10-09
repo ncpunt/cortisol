@@ -1,0 +1,28 @@
+ /*
+ * Cortisol Demonstrator
+ * Version 1.0.0.0
+ * (c) 2020 Medimatics
+ *
+ */
+ 
+  html,body {
+    height: 100%;
+    overflow: hidden;
+  }
+  .panel-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    height: 100%;
+  }
+  .panel-left {
+    flex: none;     /* manual resize */
+    width: 300px;
+    margin: 10px;
+  }
+  .panel-right {
+    flex: auto;     /* resizable */
+    min-width: 0;   /* makes chart.js canvas resize nicely */
+  }

@@ -1,0 +1,15 @@
+Package: cortisol
+Type: Package
+Title: OpenCPU Hydrocortisone Simulator
+Version: 1.0
+Date: 2020-10-05
+Author: Nieko Punt
+Maintainer: Nieko Punt <punt@medimatics.nl>
+Description: Open CPU proof of concept.
+Depends: R (>= 4.0.0)
+License: Apache2
+LazyData: true
+Encoding: UTF-8
+RoxygenNote: 7.1.1
+Imports: RxODE, jsonlite
+

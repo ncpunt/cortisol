@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <title>Cortisol</title>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" />
+    
+    <!-- Ion Range Slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+    
+    <!-- OpenCPU -->
+    <script src="opencpu/opencpu-0.4.js"></script>
+    
+    <!-- Cortisol Demonstrator -->
+    <script src="cortisol.js?V=1"></script>
+    <link rel="stylesheet" href="cortisol.css">
+
+  </head>
+  <body>
+
+    <!-- We use CSS Flexbox for the ui layout  -->
+    <div class="panel-container">
+      <article class="panel-left">
+          <h1 style="height:40px">Hydrocortisone Simulator</h1>
+          <div id="slider1"></div><div style="height:20px"></div>
+          <div id="slider2"></div><div style="height:20px"></div>
+          <div id="slider3"></div><div style="height:20px"></div>
+          <div id="slider4"></div><div style="height:30px"></div>
+          <div style="color:red">© 2020 Medimatics</div>
+      </article>
+      <article class="panel-right">
+          <canvas id="myChart" style="height:100%; width:100%"></canvas>
+      </article>
+    </div>
+
+  </body>
+</html>
