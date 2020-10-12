@@ -78,7 +78,7 @@ cortisol <- function(args){
   }
 
   # Execute simulation
-  result = mod$solve(parm, ev, vini);
+  result = cortisolModel$solve(parm, ev, vini);
 
   # Pickup relevant output
   sim = result[,c("time", "C01_C", "C01_Cu", "C01_fu")]
