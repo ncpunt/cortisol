@@ -6,7 +6,7 @@ The purpose of this OpenCPU app is to demonstrate how to run a hydrocortisone Rx
 Cloud Demo
 ----------
 
-Try the application online at ...
+Try the application online at ... NA
 
 Use locally
 -----------
