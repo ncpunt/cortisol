@@ -1,0 +1,62 @@
+##' cortisolModel RxODE model
+##'
+##' @format An \emph{RxODE} model with 14 parameters, 4 ODE states, and 18 calc vars.
+##'
+##'\emph{Parameters (cortisolModel$params)}
+##'
+##' \describe{
+##'   \item{P01_Age}{ (default=66500)}
+##'   \item{P01_Bw}{ (default=55000)}
+##'   \item{C01_V}{ (default=362.46)}
+##'   \item{MW_ALB}{ (default=66500)}
+##'   \item{MW_CBG}{ (default=55000)}
+##'   \item{MW_COR}{ (default=362.46)}
+##'   \item{C01_ALB}{ (default=66500)}
+##'   \item{C01_CBG}{ (default=55000)}
+##'   \item{C01_RC}{ (default=362.46)}
+##'   \item{C01_Kca}{ (default=66500)}
+##'   \item{C01_Kci}{ (default=55000)}
+##'   \item{C01_Kce}{ (default=362.46)}
+##'   \item{PO_k}{ (default=66500)}
+##'   \item{ME_CL}{ (default=55000)}
+##'}
+##'
+##' \emph{State cortisolModel$state}
+##'
+##' \describe{
+##'   \item{C01_A}{ (=1)}
+##'   \item{PO_A}{ (=2)}
+##'   \item{AUCU_AUC}{ (=3)}
+##'   \item{AUC_AUC}{ (=4)}
+##' }
+##'
+##' \emph{Calculated Variables cortisolModel$lhs}
+##'
+##' \describe{
+##'   \item{Age}{}
+##'   \item{Bw}{}
+##'   \item{C01_Cu}{}
+##'   \item{F}{}
+##'   \item{TA}{}
+##'   \item{TC}{}
+##'   \item{TCI}{}
+##'   \item{TCE}{}
+##'   \item{KA}{}
+##'   \item{KCI}{}
+##'   \item{KCE}{}
+##'   \item{TF}{}
+##'   \item{C01_fu}{}
+##'   \item{C01_C}{}
+##'   \item{PO_R}{}
+##'   \item{ME_k}{}
+##'   \item{ME_R}{}
+##'   \item{fu_Var}{}
+##' }
+##'
+##' @seealso \code{\link[RxODE]{eventTable}}, \code{\link[RxODE]{et}}, \code{\link[RxODE]{rxSolve}}, \code{\link[RxODE]{RxODE}}
+##' 
+##' @examples
+##' ## Showing the model code
+##' summary(cortisolModel)
+##'
+"cortisolModel"

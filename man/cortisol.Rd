@@ -18,20 +18,20 @@ Hydrocortisone Simulation API
 \examples{
 The function argument (args) must be a JSON object with the following structure:
 
-{ 
-  "args": 
+{
+  "args":
    {
      "dose": 10,    // Dose (mg)
      "tint": 6,     // Interval (hurs)
      "ndos": 3,     // Number (-)
      "nseq": 1      // Period (days)
-   } 
+   }
 }
 
 The function result is returned in the response body as JSON.
 
-{ 
-  "args": 
+{
+  "args":
    {
      "dose": 10,    // Dose (mg)
      "tint": 6,     // Interval (hurs)
@@ -46,9 +46,9 @@ The function result is returned in the response body as JSON.
          "fu":0     // Fraction unbound (-)
        }
      ]
-   } 
+   }
 }
-  
+
 DPU URLs for local single user server
 
 Web API         : POST: http://localhost:5656/ocpu/library/cortisol/R/cortisol/json

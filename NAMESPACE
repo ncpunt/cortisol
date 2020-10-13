@@ -3,3 +3,4 @@
 export(cortisol)
 import(RxODE)
 import(jsonlite)
+useDynLib(cortisol, .registration=TRUE)
