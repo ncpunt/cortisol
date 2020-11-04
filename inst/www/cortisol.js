@@ -125,6 +125,9 @@ function calc()
 // Plot the simulation results
 function plot(data) {
     
+    // Show processing time in msec
+    $("#Msg").html("© 2020 Medimatics  (" + data.tcpu + " msec)");
+     
     // Define (x,y) point arrays
     var ct = [], cu = [], fu = [];
 

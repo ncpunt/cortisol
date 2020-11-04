@@ -37,6 +37,7 @@ The function result is returned in the response body as JSON.
      "tint": 6,     // Interval (hurs)
      "ndos": 3,     // Number (-)
      "nseq": 1,     // Period (days)
+     "tcpu": 41,    // Processing time (msec)
      "sim" :
      [
        {

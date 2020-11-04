@@ -24,6 +24,7 @@
 #'      "tint": 6,     // Interval (hurs)
 #'      "ndos": 3,     // Number (-)
 #'      "nseq": 1,     // Period (days)
+#'      "tcpu": 41,    // Processing time (msec)
 #'      "sim" :
 #'      [
 #'        {
@@ -62,6 +63,9 @@ cortisol <- function(args){
   ndos <- args$ndos
   nseq <- args$nseq
 
+  # Start time
+  start_time <- as.numeric(as.numeric(Sys.time())*1000, digits=15)
+  
   # Clear interval in case of a single dose
   if (ndos==1) tint=NA
 
@@ -93,6 +97,12 @@ cortisol <- function(args){
   # Store results in args object as a data frame
   args$sim = as.data.frame(sim);
 
+  # End time
+  end_time <- as.numeric(as.numeric(Sys.time())*1000, digits=15)
+
+  # Store processing time in msec
+  args$tcpu <- as.integer(end_time-start_time)
+    
   # Return as JSON
   toJSON(args)
 }
