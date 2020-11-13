@@ -1,6 +1,6 @@
 /**
  * Javascript client library for OpenCPU
- * Version 0.4.4
+ * Version 0.4.3
  * Depends: jQuery
  * Requires HTML5 FormData support for file uploads
  * http://github.com/jeroenooms/opencpu.js
@@ -12,11 +12,6 @@
  * ocpu.seturl("//public.opencpu.org/ocpu/library/mypackage/R") //CORS
  * ocpu.seturl("/ocpu/library/mypackage/R") //hardcode path
  */
-
-//Warning for the newbies
-if(!window.jQuery) {
-  alert("Could not find jQuery! The HTML must include jquery.js before opencpu.js!")
-}
 
 (function ( $ ) {
 
@@ -145,8 +140,8 @@ if(!window.jQuery) {
       var key = jqxhr.getResponseHeader('X-ocpu-session') || console.log("X-ocpu-session response header missing.");
       var txt = jqxhr.responseText;
       
-      //in case of cors we translate relative paths to the target domain
-      if(r_cors && loc.match("^/[^/]")){
+      //in case of cors we translate the relative path
+      if(r_cors){
         loc = r_path.protocol + "//" + r_path.host + loc;
       }
       handler(new Session(loc, key, txt));
@@ -162,7 +157,7 @@ if(!window.jQuery) {
   function r_fun_call_json(fun, args, handler){
     return r_fun_ajax(fun, {
       data: JSON.stringify(args || {}),
-      contentType : 'application/json'
+      contentType : 'application/json',      
     }, handler);
   }   
   
@@ -260,6 +255,7 @@ if(!window.jQuery) {
       var Location;
       var pngwidth;
       var pngheight;
+      var ratio = window.devicePixelRatio || 1;
       
       var plotdiv = $('<div />').attr({
         style: "width: 100%; height:100%; min-width: 100px; min-height: 100px; position:relative; background-repeat:no-repeat; background-size: 100% 100%;"
@@ -288,7 +284,7 @@ if(!window.jQuery) {
         if(!Location) return;
         pngwidth = plotdiv.width();
         pngheight = plotdiv.height();
-        plotdiv.css("background-image", "url(" + Location + "graphics/last/png?width=" + pngwidth + "&height=" + pngheight + ")");       
+        plotdiv.css("background-image", "url(" + Location + "graphics/last/png?width=" + pngwidth * ratio + "&height=" + pngheight * ratio + "&res=" + 72 * ratio + ")");
       }
       
       function setlocation(newloc){
@@ -300,7 +296,7 @@ if(!window.jQuery) {
           plotdiv.css("background-image", "");
         } else {
           pdf.attr("href", Location + "graphics/last/pdf?width=11.69&height=8.27&paper=a4r").show();
-          svg.attr("href", Location + "graphics/last/svg?width=11&height=6").show();
+          svg.attr("href", Location + "graphics/last/svg?width=11.69&height=8.27").show();
           png.attr("href", Location + "graphics/last/png?width=800&height=600").show(); 
           updatepng();
         }

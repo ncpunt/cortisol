@@ -1,6 +1,6 @@
 /*
  * Cortisol Demonstrator
- * Version 1.0.0.0
+ * Version 1.0.0.1
  * (c) 2020 Medimatics
  *
  */
@@ -9,7 +9,7 @@
 $(document).ready(function () 
 {
     // Create the sliders
-    sliders();
+    gui();
 
     // Simulate default values
     calc();
@@ -17,7 +17,7 @@ $(document).ready(function ()
 });
 
 // Create the sliders
-function sliders()
+function gui()
 {
     // Dose
     $("#slider1").ionRangeSlider({
@@ -84,6 +84,16 @@ function sliders()
         hide_min_max: true,
         onFinish: function (data) { calc(); }
     });
+
+    // Set default server depending on host name
+    if (window.location.hostname.indexOf("ocpu") > -1) $("#OpenCPU").prop("checked", true)
+    else                                               $("#ASPNET").prop("checked", true)
+
+    // Trigger calculation after clicking radio button
+    $("input[type='radio']").change(function () { calc(); });
+
+    // Hidy busy image
+    $("#uiBusy").hide(); 
 }
 
 // Read slider value
@@ -97,6 +107,9 @@ function slider(id)
 // Execute simulation
 function calc()
 {
+    // Show busy image
+    $("#uiBusy").show();
+
     // Collect the input data from all sliders
     var data = {};
     data.dose = slider('#slider1'); 
@@ -104,39 +117,78 @@ function calc()
     data.ndos = slider('#slider3'); 
     data.nseq = slider('#slider4'); 
 
-    // Perform the request
-    var req = ocpu.rpc("cortisol", {
-            args: data
-        }, function (output) {
-            plot(JSON.parse(output));
+    // Select server
+    if ($("#OpenCPU").prop("checked"))
+    {
+        /***  R on OpenCPU (RxODE)  ***/
+
+        // Perform the request using ocpu client library
+
+        // Set url for cross domain call
+        if (!window.location.hostname.indexOf("ocpu") > -1)
+        {
+            ocpu.seturl("https://ncpunt.ocpu.io/cortisol/R");                           // Short URL
+            //ocpu.seturl("https://cloud.opencpu.org/ocpu/apps/ncpunt/cortisol/R");     // Long URL
+        }
+        var req = ocpu.rpc("cortisol", {
+                args: data
+            }, function (output) {
+                plot(JSON.parse(output));
+            });
+
+        // If R returns an error, alert the error message
+        req.fail(function () {
+            alert("Server error: " + req.responseText);
         });
+    }
+    else
+    {
+        /***  C# on ASP.NET (NeoEngine)  ***/
 
-    // If R returns an error, alert the error message
-    req.fail(function () {
-        alert("Server error: " + req.responseText);
-    });
+        // Perform the request using jquery ajax library
 
-    // After request complete, re-enable the button
-    req.always(function () {
-        $("#submitbutton").removeAttr("disabled");
-    });
+        // Service URL
+        var url = "https://www.medimatics.nl/corapi"  
+
+        // Service Controller
+        var method = "api/CorData" 
+
+        // Setup ajax options
+        var options =
+        {
+            url: url + '/' + method,
+            type: "POST",
+            cache: false,    // Avoids instant insanity
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data),
+            xhrFields: { withCredentials: false },
+            success: function (output) { plot(output); }, 
+            error: function (XMLHttpRequest, textStatus, errorThrown) { alert(errorThrown + "\n\n" + XMLHttpRequest.responseText); }
+        }
+
+        // Post ajax request
+        $.ajax(options);
+    }
 }
 
 // Plot the simulation results
 function plot(data) {
     
     // Show processing time in msec
-    $("#Msg").html("© 2020 Medimatics  (" + data.tcpu + " msec)");
-     
+    $("#tcpu").text("CPU = " + data.tcpu + " ms");
+
     // Define (x,y) point arrays
     var ct = [], cu = [], fu = [];
 
     // Convert (t, C) to (x, y) points
     for (var i = 0; i < data.sim.length; i++){
-        ct.push({x: data.sim[i].t, y: data.sim[i].C  });
-        cu.push({x: data.sim[i].t, y: data.sim[i].Cu });
+        ct.push({x: data.sim[i].t, y: data.sim[i].C  ? data.sim[i].C  : data.sim[i].c  });
+        cu.push({x: data.sim[i].t, y: data.sim[i].Cu ? data.sim[i].Cu : data.sim[i].cu });
         fu.push({x: data.sim[i].t, y: data.sim[i].fu });
     }
+    // Note that the members C and Cu are uppercase in OpenCPU and lowercase (c, cu) in ASP.NET
     
     // Chart confugration
     var config = {
@@ -233,4 +285,7 @@ function plot(data) {
     
     // Build the chart
     var chart = new Chart(ctx, config);
+
+    // Hide busy image
+    $("#uiBusy").hide();  
 }
