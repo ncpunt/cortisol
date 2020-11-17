@@ -104,5 +104,5 @@ cortisol <- function(args){
   args$tcpu <- as.integer(end_time-start_time)
     
   # Return as JSON
-  toJSON(args)
+  toJSON(args, auto_unbox = T)
 }
