@@ -89,8 +89,8 @@ function gui()
     });
 
     // Set default server depending on host name
-    if (window.location.hostname.indexOf("ocpu") > -1) $("#OpenCPU").prop("checked", true)
-    else                                               $("#ASPNET").prop("checked", true)
+    if (window.location.href.indexOf("ocpu") > -1) $("#OpenCPU").prop("checked", true)
+    else                                           $("#ASPNET").prop("checked", true)
 
     // Trigger calculation after clicking radio button
     $("input[type='radio']").change(function () { calc(); });
@@ -131,10 +131,11 @@ function calc()
         // Perform the request using ocpu client library
 
         // Set url for cross domain call
-        if (!window.location.hostname.indexOf("ocpu") > -1)
+        if (!window.location.href.indexOf("ocpu") > -1)
         {
-            ocpu.seturl("https://ncpunt.ocpu.io/cortisol/R");                           // Short URL
-            //ocpu.seturl("https://cloud.opencpu.org/ocpu/apps/ncpunt/cortisol/R");     // Long URL
+            ocpu.seturl("https://ncpunt.ocpu.io/cortisol/R");                         // Short URL
+            //ocpu.seturl("https://cloud.opencpu.org/ocpu/apps/ncpunt/cortisol/R");   // Long URL
+            //ocpu.seturl(" http://localhost:5656/ocpu/library/cortisol/R");          // Localhost                         // Short URL
         }
         var req = ocpu.rpc("cortisol", {
                 args: data
