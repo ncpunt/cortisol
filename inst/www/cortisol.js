@@ -5,6 +5,9 @@
  *
  */
 
+ // Request start time
+var t0;
+
 // jQuery entry point
 $(document).ready(function () 
 {
@@ -107,6 +110,9 @@ function slider(id)
 // Execute simulation
 function calc()
 {
+    // Record request start time 
+    t0 = performance.now();
+
     // Show busy image
     $("#uiBusy").show();
 
@@ -175,7 +181,13 @@ function calc()
 
 // Plot the simulation results
 function plot(data) {
-    
+
+    // Get number of msec taken for response
+    var elapsed = Math.trunc(performance.now() - t0);
+
+    // Show trip time
+    $("#Msg").text("(C) 2020 Medimatics (" + elapsed + " ms)");
+
     // Show processing time in msec
     $("#tcpu").text("CPU = " + data.tcpu + " ms");
 
